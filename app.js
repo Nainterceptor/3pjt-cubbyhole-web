@@ -42,6 +42,7 @@ app.use(less({
 ));
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/bootstrap/js', express.static(path.join(__dirname, 'node_modules', 'twitter-bootstrap-3.0.0', 'js')));
 
 // development only
 if ('development' == app.get('env')) {
