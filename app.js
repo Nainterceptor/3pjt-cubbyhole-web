@@ -23,7 +23,6 @@ app.use(express.methodOverride());
 app.use(express.cookieParser('your secret here'));
 app.use(express.session());
 app.use(app.router);
-app.set('originUrl', '/');
 app.all('/user/*', function(req,res, next){
     if (req.cookies.token){
         next();
