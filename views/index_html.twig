@@ -1,0 +1,20 @@
+{% extends 'global/front_html.twig' %}
+{% block body %}
+    <h1>Offres</h1>
+    <hr>
+    {% for plan in plans %}
+        <div class="col-md-4">
+            <div class="thumbnail">
+                <div class="caption">
+                    <h1>{{ plan.name }}</h1>
+                    {% if plan.price == 0 %}
+                        <p>Gratuit !</p>
+                    {% else %}
+                        <p>{{ plan.price }}€ / mois !</p>
+                    {% endif %}
+                    <p><a class="btn btn-primary">Souscrire &raquo;</a></p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock body %}
