@@ -1,4 +1,5 @@
-var api_call = require('../api_call/api_call')
+var api_call = require('../api_call/api_call');
+var error = require('../errors/userError.js');
 /*
  * GET users listing.
  */
@@ -8,8 +9,14 @@ exports.index = function(req, res){
 };
 
 exports.me = function(req, res){
+
     api_call.get('/user/my/get', {'token': req.cookies.token}, function (obj){
-        console.log(obj);
-        res.render('user/me_html', {user: obj.user});
+            error(req, res, obj);
+            res.render('user/me_html', {user: obj.user});
+//        if (!obj.success) {
+//            error(req, res, obj);
+//        } else {
+//            res.render('user/me_html', {user: obj.user});
+//        }
     });
 };

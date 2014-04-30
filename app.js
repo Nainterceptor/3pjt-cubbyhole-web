@@ -23,25 +23,24 @@ app.use(express.methodOverride());
 app.use(express.cookieParser('your secret here'));
 app.use(express.session());
 app.use(app.router);
+app.set('originUrl', '/');
 app.all('/user/*', function(req,res, next){
-    if (req.cookies.token) {
+    if (req.cookies.token){
         next();
     } else {
-        req.url='/login';
-        next();
+        req.session.lastPage = req.url;
+        res.redirect('/login');
     }
 });
-//app.use(less(
-//    path.join(__dirname, 'private', 'less'),
-//    {
-//        preprocess: {path: function(pathname, req) {
-//            return pathname.replace('/compiled/css', '');}},
-//        dest: path.join(__dirname, 'public', 'compiled', 'css')
-//    },{
-//        paths: [path.join(bootstrapPath, 'less')]
-//    },{
-//        compress: true
-//    }));
+app.use(less({
+    src: path.join(__dirname, 'private', 'less'),
+    prefix: '/compiled/css',
+    compress: true,
+    paths: [path.join(bootstrapPath, 'less')],
+    dest: path.join(__dirname, 'public', 'compiled', 'css')
+
+}
+));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
