@@ -31,6 +31,16 @@ app.all('/user/*', function(req,res, next){
         res.redirect('/login');
     }
 });
+app.all('/*', function(req,res,next){
+    swig.setDefaults({locals: { tokenExist: function(){
+         return req.cookies.token}},
+    cache: false});
+    if (!req.session.lastPage || req.url =='/'){
+    req.session.lastPage = req.url;
+    }
+    next();
+});
+
 app.use(less({
     src: path.join(__dirname, 'private', 'less'),
     prefix: '/compiled/css',
@@ -42,6 +52,7 @@ app.use(less({
 ));
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/bootstrap/js', express.static(path.join(__dirname, 'node_modules', 'twitter-bootstrap-3.0.0', 'js')));
 
 // development only
 if ('development' == app.get('env')) {
@@ -49,6 +60,7 @@ if ('development' == app.get('env')) {
 }
 
 var routes = require('./routes/routes')(app);
+
 
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));

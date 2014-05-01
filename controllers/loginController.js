@@ -13,6 +13,7 @@ exports.login = function(req, res){
         'password': req.body.password
     }, function (obj){
         res.cookie('token', obj.token, {maxAge: 4000000});
+        console.log(req.session.lastPage);
         res.redirect(req.session.lastPage);
     });
 };
