@@ -10,6 +10,7 @@
     "less-middleware": "~0.1.15",
     "mongodb": "*",
     "swig": "~1.2.2",
-    "twitter-bootstrap-3.0.0": "*"
+    "twitter-bootstrap-3.0.0": "*",
+    "connect-flash": "~0.1.1"
   }
 }

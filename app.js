@@ -9,6 +9,7 @@ var swig = require('swig');
 var less = require('less-middleware');
 var bootstrapPath = path.join(__dirname, 'node_modules', 'twitter-bootstrap-3.0.0');
 var app = express();
+var flash = require('connect-flash');
 
 // all environments
 app.set('port', process.env.PORT || 3001);
@@ -27,28 +28,47 @@ app.all('/user/*', function(req,res, next){
     if (req.cookies.token){
         next();
     } else {
+        req.session.flashBag = {error: 'Vous devez vous connecter'};
         req.session.lastPage = req.url;
         res.redirect('/login');
     }
 });
 app.all('/*', function(req,res,next){
-    swig.setDefaults({locals: { tokenExist: function(){
-         return req.cookies.token}},
-    cache: false});
+    swig.setDefaults({
+        locals: {
+            tokenExist: function(){return req.cookies.token},
+            getFlash: function(){
+                if (!req.session.flashBag){
+                    req.session.flashBag = {};
+                }
+                if (req.session.flashBag.error){
+                    return "<div class=\"alert alert-danger fade in\"><button type=\"button\" class=\"close\"" +
+                        " data-dismiss=\"alert\" aria-hidden=\"true\">×</button><strong>Error! </strong>"
+                        +req.session.flashBag.error+"</div>"}
+                else {
+                    return false;
+                }
+                ;},
+            clearFlashError: function() {
+                if (req.session.flashBag.error) {
+                    req.session.flashBag.error = null;
+                }
+            }
+        }, cache: false});
     if (!req.session.lastPage || req.url =='/'){
-    req.session.lastPage = req.url;
+        req.session.lastPage = req.url;
     }
     next();
 });
 
 app.use(less({
-    src: path.join(__dirname, 'private', 'less'),
-    prefix: '/compiled/css',
-    compress: true,
-    paths: [path.join(bootstrapPath, 'less')],
-    dest: path.join(__dirname, 'public', 'compiled', 'css')
+        src: path.join(__dirname, 'private', 'less'),
+        prefix: '/compiled/css',
+        compress: true,
+        paths: [path.join(bootstrapPath, 'less')],
+        dest: path.join(__dirname, 'public', 'compiled', 'css')
 
-}
+    }
 ));
 
 app.use(express.static(path.join(__dirname, 'public')));

@@ -5,35 +5,43 @@
     <link rel="stylesheet" href="/compiled/css/style.css" />
 </head>
 <body>
+<div class="container">
+
+    <div class="masthead">
+        <h3 class="text-muted">Cubbyhole</h3>
+        <ul class="nav nav-justified">
+            <li class="active"><a href="/">Accueil</a></li>
+            <li><a href="#">Projects</a></li>
+            <li><a href="#">Downloads</a></li>
+            {% if tokenExist() %}
+                <li><a href="/user/me">About Me</a></li>
+            {% else %}
+                <li><a href="/login">Login</a></li>
+            {% endif %}
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </div>
+    {% if getFlash() %}
+        {{ getFlash() }}<span style="display: none">{{ clearFlashError() }}</span>
+    {% endif %}
+
     <div class="container">
-
-        <div class="masthead">
-            <h3 class="text-muted">Cubbyhole</h3>
-            <ul class="nav nav-justified">
-                <li class="active"><a href="/">Accueil</a></li>
-                <li><a href="#">Projects</a></li>
-                <li><a href="#">Downloads</a></li>
-                {% if tokenExist() %}
-                    <li><a href="/user/me">About Me</a></li>
-                {% else %}
-                    <li><a href="/login">Login</a></li>
-                {% endif %}
-                <li><a href="#">Contact</a></li>
-            </ul>
+        <div class="row">
+            {% block body %}
+            {% endblock body %}
         </div>
+    </div>
 
-        <div class="container">
-            <div class="row">
-                {% block body %}
-                {% endblock body %}
-            </div>
-        </div>
+    <!-- Site footer -->
+    <div class="footer">
+        <p>&copy; Company 2013</p>
+    </div>
 
-        <!-- Site footer -->
-        <div class="footer">
-            <p>&copy; Company 2013</p>
-        </div>
+    {% block pageJavascript %}
+        <script type="text/javascript" src="/compiled/js/jquery-2.1.0.min.js"></script>
+        <script type="text/javascript" src="/bootstrap/js/alert.js"></script>
+    {% endblock %}
 
-    </div> <!-- /container -->
+</div> <!-- /container -->
 </body>
 </html>
