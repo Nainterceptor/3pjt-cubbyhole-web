@@ -6,11 +6,11 @@
     "start": "node app.js"
   },
   "dependencies": {
+    "connect-flash": "~0.1.1",
     "express": "3.4.7",
+    "jquery": "^2.1.1",
     "less-middleware": "~0.1.15",
-    "mongodb": "*",
     "swig": "~1.2.2",
-    "twitter-bootstrap-3.0.0": "*",
-    "connect-flash": "~0.1.1"
+    "twitter-bootstrap-3.0.0": "*"
   }
 }
