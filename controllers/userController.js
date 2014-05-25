@@ -1,11 +1,10 @@
-var api_call = require('../api_call/api_call');
 var error = require('../errors/userError.js');
 /*
  * GET users listing.
  */
 
 exports.index = function(req, res){
-    res.render('login_html', { title: 'Login' });
+    res.render('login.html.twig', { title: 'Login' });
 };
 
 exports.me = function(req, res){

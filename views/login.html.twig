@@ -1,4 +1,7 @@
-{% extends 'global/front_html.twig' %}
+{% extends 'global/front.html.twig' %}
+{% block title -%}
+    Login - {% parent %}
+{%- endblock title %}
 {% block body %}
 <div class="row-fluid">
     <h1>Please sign in</h1>

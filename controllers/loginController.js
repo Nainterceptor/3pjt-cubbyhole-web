@@ -1,10 +1,9 @@
-var api_call = require('../api_call/api_call')
 /*
  * GET users listing.
  */
 
 exports.index = function(req, res){
-    res.render('login_html', { title: 'Login' });
+    res.render('login.html.twig');
 };
 
 exports.login = function(req, res){

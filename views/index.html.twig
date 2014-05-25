@@ -1,6 +1,9 @@
-{% extends 'global/front_html.twig' %}
+{% extends 'global/front.html.twig' %}
+{% block title -%}
+    Home - {% parent %}
+{%- endblock title %}
 {% block body %}
-    <h1>Offres</h1>
+    <h1>Offers</h1>
     <hr>
     {% for plan in plans %}
         <div class="col-md-4">
@@ -8,11 +11,11 @@
                 <div class="caption">
                     <h1>{{ plan.name }}</h1>
                     {% if plan.price == 0 %}
-                        <p>Gratuit !</p>
+                        <p>Free !</p>
                     {% else %}
-                        <p>{{ plan.price }}€ / mois !</p>
+                        <p>{{ plan.price }}€ / month !</p>
                     {% endif %}
-                    <p><a class="btn btn-primary">Souscrire &raquo;</a></p>
+                    <p><a class="btn btn-primary">Subscribe &raquo;</a></p>
                 </div>
             </div>
         </div>

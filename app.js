@@ -9,7 +9,6 @@ var swig = require('swig');
 var less = require('less-middleware');
 var bootstrapPath = path.join(__dirname, 'node_modules', 'twitter-bootstrap-3.0.0');
 var app = express();
-var flash = require('connect-flash');
 
 // all environments
 app.set('port', process.env.PORT || 3001);
@@ -80,7 +79,7 @@ if ('development' == app.get('env')) {
     app.use(express.errorHandler());
 }
 
-var routes = require('./routes/routes')(app);
+var routes = require('./config/routes')(app);
 
 
 http.createServer(app).listen(app.get('port'), function(){
