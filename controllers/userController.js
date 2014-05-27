@@ -1,4 +1,6 @@
 var error = require('../errors/userError.js');
+var unirest = require('unirest');
+var config = require('../config/config.js');
 /*
  * GET users listing.
  */
@@ -8,14 +10,12 @@ exports.index = function(req, res){
 };
 
 exports.me = function(req, res){
-
-    api_call.get('/user/my/get', {'token': req.cookies.token}, function (obj){
-            error(req, res, obj);
-            res.render('user/me_html', {user: obj.user});
-//        if (!obj.success) {
-//            error(req, res, obj);
-//        } else {
-//            res.render('user/me_html', {user: obj.user});
-//        }
-    });
+    unirest
+        .get(config.api + '/user/my/get')
+        .type('json')
+        .send({'token': req.cookies.token})
+        .end(function (rest) {
+            error(req, res, rest.body);
+            res.render('user/me.html.twig', {user: rest.body.user});
+        });
 };
