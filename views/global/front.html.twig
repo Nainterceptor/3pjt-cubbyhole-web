@@ -31,9 +31,33 @@
 
     <!-- Begin page content -->
     <div class="container">
-        {% if getFlash() %}
-            {{ getFlash() }}<span style="display: none">{{ clearFlashError() }}</span>
-        {% endif %}
+        {% for type, flashs in getFlashs() %}
+            <div class="alert alert-{{ type }} alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {% spaceless %}
+                <strong>
+                    {% if type == 'success' %}
+                        Success !
+                    {% elseif type == 'info' %}
+                        Information :
+                    {% elseif type == 'warning' %}
+                        Warning !
+                    {% else %}
+                        Error !
+                    {% endif %}
+                </strong>
+                {% endspaceless %}
+            {% if flashs.length > 1 %}
+                <ul>
+                {% for flash in flashs %}
+                    <li>{{ flash }}</li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                {{ flashs|first }}
+            {% endif %}
+            </div>
+        {% endfor %}
         {% block body %}
             <div class="page-header">
                 <h1>Sticky footer with fixed navbar</h1>

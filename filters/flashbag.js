@@ -1,26 +1,34 @@
+var extend = require('util')._extend;
+
 module.exports = function(swig) {
-    return function(req,res,next){
+    var flashbag = {};
+    return function(req, res, next) {
+        if (typeof flashbag[req.session.id] == 'undefined') {
+            flashbag[req.session.id] = {};
+        }
+        var userFlashbag = flashbag[req.session.id];
+        res.flashBag =  {
+            add: function(type, content) {
+                if (typeof userFlashbag[type] == 'undefined') {
+                    userFlashbag[type] = [];
+                }
+                userFlashbag[type].push(content);
+            },
+            flush: function() {
+                var bag = extend({}, userFlashbag);
+                flashbag[req.session.id] = {};
+                return bag;
+            }
+        };
         swig.setDefaults({
             locals: {
-                tokenExist: function(){return req.cookies.token},
-                getFlash: function(){
-                    if (!req.session.flashBag){
-                        req.session.flashBag = {};
-                    }
-                    if (req.session.flashBag.error){
-                        return "<div class=\"alert alert-danger fade in\"><button type=\"button\" class=\"close\"" +
-                            " data-dismiss=\"alert\" aria-hidden=\"true\">×</button><strong>Error! </strong>"
-                            +req.session.flashBag.error+"</div>"}
-                    else {
-                        return false;
-                    }
-                    ;},
-                clearFlashError: function() {
-                    if (req.session.flashBag.error) {
-                        req.session.flashBag.error = null;
-                    }
+                tokenExist: function() { return req.cookies.token },
+                getFlashs: function() {
+                    return res.flashBag.flush();
                 }
-            }, cache: false});
+            },
+            cache: false
+        });
         if (!req.session.lastPage || req.url =='/'){
             req.session.lastPage = req.url;
         }
