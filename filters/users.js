@@ -3,7 +3,7 @@ module.exports = function() {
         if (req.cookies.token){
             next();
         } else {
-            req.flashBag.add('error', 'Login required');
+            res.flashBag.add('danger', 'Login required');
             req.session.lastPage = req.url;
             res.redirect('/login');
         }
