@@ -19,7 +19,7 @@
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="/">Home</a></li>
-                    {% if tokenExist() %}
+                    {% if tokenExist(req) %}
                         <li><a href="/user/me">About Me</a></li>
                     {% else %}
                         <li><a href="/login">Login</a></li>
@@ -31,7 +31,7 @@
 
     <!-- Begin page content -->
     <div class="container">
-        {% for type, flashs in getFlashs() %}
+        {% for type, flashs in getFlashs(res) %}
             <div class="alert alert-{{ type }} alert-dismissable">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                 {% spaceless %}
@@ -58,22 +58,9 @@
             {% endif %}
             </div>
         {% endfor %}
-        {% block body %}
-            <div class="page-header">
-                <h1>Sticky footer with fixed navbar</h1>
-            </div>
-            <p class="lead">Pin a fixed-height footer to the bottom of the viewport in desktop browsers with this custom
-                HTML and CSS. A fixed navbar has been added with <code>padding-top: 60px;</code> on the <code>body >
-                    .container</code>.</p>
-            <p>Back to <a href="../sticky-footer">the default sticky footer</a> minus the navbar.</p>
-        {% endblock body %}
+        {% block body %}{% endblock body %}
     </div>
 
-    <div id="footer">
-        <div class="container">
-            <p class="text-muted">&copy; cubbyhole 2014.</p>
-        </div>
-    </div>
     {% block pageJavascript %}
         <script type="text/javascript" src="/compiled/js/jquery/jquery.min.js"></script>
         <script type="text/javascript" src="/compiled/js/bootstrap/alert.js"></script>

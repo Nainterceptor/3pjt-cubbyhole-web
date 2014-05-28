@@ -1,6 +1,6 @@
 var extend = require('util')._extend;
 
-module.exports = function(swig) {
+module.exports = function() {
     var flashbag = {};
     return function(req, res, next) {
         if (typeof flashbag[req.session.id] == 'undefined') {
@@ -20,15 +20,6 @@ module.exports = function(swig) {
                 return bag;
             }
         };
-        swig.setDefaults({
-            locals: {
-                tokenExist: function() { return req.cookies.token },
-                getFlashs: function() {
-                    return res.flashBag.flush();
-                }
-            },
-            cache: false
-        });
         if (!req.session.lastPage || req.url =='/'){
             req.session.lastPage = req.url;
         }

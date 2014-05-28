@@ -43,11 +43,19 @@ app.use(less({
 
     }
 ));
-
+swig.setDefaults({
+    locals: {
+        tokenExist: function(req) { return req.cookies.token },
+        getFlashs: function(res) {
+            return res.flashBag.flush();
+        }
+    }
+});
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/compiled/js/jquery', express.static(path.join(__dirname, 'node_modules', 'jquery', 'dist')));
 app.use('/compiled/js/bootstrap', express.static(path.join(__dirname, 'node_modules', 'twitter-bootstrap-3.0.0', 'js')));
-
+app.use('/compiled/fonts', express.static(path.join(__dirname, 'node_modules', 'twitter-bootstrap-3.0.0', 'fonts')));
+app.use(require('./middlewares/renderOverride'));
 app.use(require('./config/routes')(express, swig));
 
 

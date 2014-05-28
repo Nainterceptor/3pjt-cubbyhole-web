@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Cubbyhole{% endblock title %}</title>
+    <link rel="stylesheet" href="/compiled/css/app.css"/>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <aside class="col-md-2" role="navigation">
+            <h1>Cubbyhole</h1>
+            <ul>
+                <li><span class="glyphicon glyphicon-file" ></span> <a href="">Files</a></li>
+            </ul>
+        </aside>
+        <section class="col-md-10">
+            {% for type, flashs in getFlashs(res) %}
+                <div class="alert alert-{{ type }} alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    {% spaceless %}
+                        <strong>
+                            {% if type == 'success' %}
+                                Success !
+                            {% elseif type == 'info' %}
+                                Information :
+                            {% elseif type == 'warning' %}
+                                Warning !
+                            {% else %}
+                                Error !
+                            {% endif %}
+                        </strong>
+                    {% endspaceless %}
+                    {% if flashs.length > 1 %}
+                        <ul>
+                            {% for flash in flashs %}
+                                <li>{{ flash }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        {{ flashs|first }}
+                    {% endif %}
+                </div>
+            {% endfor %}
+            {% block body %}{% endblock body %}
+        </section>
+    </div>
+</div>
+{% block pageJavascript %}
+    <script type="text/javascript" src="/compiled/js/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/compiled/js/bootstrap/alert.js"></script>
+{% endblock %}
+</body>
+</html>
