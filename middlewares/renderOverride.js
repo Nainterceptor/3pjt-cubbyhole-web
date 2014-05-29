@@ -21,6 +21,7 @@ module.exports = function(req, res, next) {
         }
         options.res = res;
         options.req = req;
+        options.session = req.session;
         render.call(self, view, options, function(err, str) {
             fn(err, str);
         });

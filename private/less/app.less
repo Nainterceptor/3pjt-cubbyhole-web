@@ -3,14 +3,14 @@
 
 html, body {
   height: 100%;
+  color: #364760;
   font-family: 'Open Sans', sans-serif;
 }
 a, a:visited, a:focus, a:hover {
   text-decoration: none;
 }
 .container-fluid,
-.container-fluid > .row,
-aside[role="navigation"] {
+.container-fluid > .row {
   height: 100%;
 }
 
@@ -18,32 +18,44 @@ aside[role="navigation"] {
   background: #444c63;
   position: fixed;
   color: #8692b2;
+  height: 100%;
+  ul {
+    padding: 10px;
+    list-style: none;
+  }
+  a {
+    color: inherit;
+    line-height: 25px;
+    vertical-align: middle;
+  }
+  .glyphicon {
+    font-size: 22px;
+  }
+  h1 {
+    color: #00b5f9;
+    font-weight: 300;
+    font-size: 25px;
+    text-align: center;
+
+  }
+  a:hover, .glyphicon{
+    color: #FFF;
+  }
 }
-aside[role="navigation"] ul {
-  padding: 10px;
-  list-style: none;
-}
-aside[role="navigation"] a {
-  color: inherit;
-  line-height: 25px;
-  vertical-align: middle;
-}
-aside[role="navigation"] .glyphicon {
-  font-size: 22px;
-}
-aside[role="navigation"] h1 {
-  color: #00b5f9;
+
+h1 {
   font-weight: 300;
-  font-size: 25px;
-  text-align: center;
+  font-size: 20pt;
 
 }
 
-aside[role="navigation"] a:hover,
-aside[role="navigation"] .glyphicon{
-  color: #FFF;
+.my-account {
+  font-size: 13pt;
+  text-align: right;
 }
 
 .col-md-10 {
-  margin-left: 16.667%;
+  position: absolute;
+  right: 0;
+  padding: 20px;
 }

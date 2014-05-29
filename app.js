@@ -36,10 +36,10 @@ if ('development' == app.get('env')) {
 
 app.use(less({
         src: path.join(__dirname, 'private', 'less'),
-        prefix: '/compiled/css',
+        prefix: '/css',
         compress: true,
         paths: [path.join(bootstrapPath, 'less')],
-        dest: path.join(__dirname, 'public', 'compiled', 'css')
+        dest: path.join(__dirname, 'public', 'css')
 
     }
 ));
@@ -48,13 +48,14 @@ swig.setDefaults({
         tokenExist: function(req) { return req.cookies.token },
         getFlashs: function(res) {
             return res.flashBag.flush();
-        }
+        },
+        config: require('./config/config')
     }
 });
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/compiled/js/jquery', express.static(path.join(__dirname, 'node_modules', 'jquery', 'dist')));
-app.use('/compiled/js/bootstrap', express.static(path.join(__dirname, 'node_modules', 'twitter-bootstrap-3.0.0', 'js')));
-app.use('/compiled/fonts', express.static(path.join(__dirname, 'node_modules', 'twitter-bootstrap-3.0.0', 'fonts')));
+app.use('/js/jquery', express.static(path.join(__dirname, 'node_modules', 'jquery', 'dist')));
+app.use('/js/bootstrap', express.static(path.join(__dirname, 'node_modules', 'twitter-bootstrap-3.0.0', 'js')));
+app.use('/fonts', express.static(path.join(__dirname, 'node_modules', 'twitter-bootstrap-3.0.0', 'fonts')));
 app.use(require('./middlewares/renderOverride'));
 app.use(require('./config/routes')(express, swig));
 

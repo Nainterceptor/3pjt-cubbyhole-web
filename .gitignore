@@ -29,5 +29,5 @@ node_modules
 .idea/runConfigurations/app_js.xml
 
 #Cover cubbyhole app
-public/compiled/css/*
-!public/compiled/css/.gitkeep
+public/css/*
+!public/css/.gitkeep

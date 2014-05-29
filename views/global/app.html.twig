@@ -2,18 +2,24 @@
 <html>
 <head>
     <title>{% block title %}Cubbyhole{% endblock title %}</title>
-    <link rel="stylesheet" href="/compiled/css/app.css"/>
+    <link rel="stylesheet" href="/css/app.css"/>
 </head>
 <body>
 <div class="container-fluid">
-    <div class="row">
+    <div class="row-fluid">
         <aside class="col-md-2" role="navigation">
             <h1>Cubbyhole</h1>
             <ul>
-                <li><span class="glyphicon glyphicon-file" ></span> <a href="">Files</a></li>
+                <li><span class="glyphicon glyphicon-file" ></span> <a href="/user/webapp/index">Files</a></li>
             </ul>
         </aside>
         <section class="col-md-10">
+            <div class="row-fluid clearfix">
+                <div class="col-md-7"></div>
+                <div class="col-md-4 col-md-offset-1 my-account">
+                    {{ session.user.email }}
+                </div>
+            </div>
             {% for type, flashs in getFlashs(res) %}
                 <div class="alert alert-{{ type }} alert-dismissable">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -46,8 +52,73 @@
     </div>
 </div>
 {% block pageJavascript %}
-    <script type="text/javascript" src="/compiled/js/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="/compiled/js/bootstrap/alert.js"></script>
+    <script type="text/javascript" src="/js/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="/js/bootstrap/alert.js"></script>
+    <script type="text/javascript">
+        function progressHandlingFunction(e){
+            if(e.lengthComputable){
+                console.log(e.loaded);
+                console.log(e.total);
+                $('progress').attr({value:e.loaded,max:e.total});
+            }
+        }
+        function sendFileToServer(formData)
+        {
+            var token = $.cookie("token");
+            $.ajax({
+                url: "{{ config.api }}/file/upload",
+                type: 'POST',
+                headers: {
+                    token: token
+                },
+                xhr: function() {
+                    var myXhr = $.ajaxSettings.xhr();
+                    if(myXhr.upload){
+                        myXhr.upload.addEventListener('progress',progressHandlingFunction, false);
+                    }
+                    return myXhr;
+                },
+                //Ajax events
+                //beforeSend: beforeSendHandler,
+                success: function(data) {
+                    console.log(data);
+                },
+                error: function(error) {
+                    console.log(error);
+                },
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        }
+        function uploadFiles (files)
+        {
+            for (var i = 0; i < files.length; i++)
+            {
+                var fd = new FormData();
+                fd.append('file', files[i]);
+                sendFileToServer(fd);
+            }
+        }
+
+        $(document).on('dragenter', function (e)
+        {
+            return false;
+        });
+        $(document).on('dragover', function (e)
+        {
+            return false;
+        });
+        $(document).on('drop', function (e)
+        {
+
+            var files = e.originalEvent.dataTransfer.files;
+            uploadFiles(files);
+            return false;
+        });
+    </script>
 {% endblock %}
 </body>
 </html>
