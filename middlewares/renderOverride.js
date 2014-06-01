@@ -4,7 +4,6 @@ module.exports = function(req, res, next) {
         var self = this,
             options = options || {},
             req = this.req,
-            app = req.app,
             defaultFn;
 
         if ('function' == typeof options) {
@@ -22,6 +21,7 @@ module.exports = function(req, res, next) {
         options.res = res;
         options.req = req;
         options.session = req.session;
+        options.user = req.user;
         render.call(self, view, options, function(err, str) {
             fn(err, str);
         });

@@ -60,20 +60,20 @@
             if(e.lengthComputable){
                 console.log(e.loaded);
                 console.log(e.total);
-                $('progress').attr({value:e.loaded,max:e.total});
+                jQuery('progress').attr({value:e.loaded,max:e.total});
             }
         }
         function sendFileToServer(formData)
         {
-            var token = $.cookie("token");
-            $.ajax({
+            var token = jQuery.cookie("token");
+            jQuery.ajax({
                 url: "{{ config.api }}/file/upload",
                 type: 'POST',
                 headers: {
                     token: token
                 },
                 xhr: function() {
-                    var myXhr = $.ajaxSettings.xhr();
+                    var myXhr = jQuery.ajaxSettings.xhr();
                     if(myXhr.upload){
                         myXhr.upload.addEventListener('progress',progressHandlingFunction, false);
                     }
@@ -103,15 +103,15 @@
             }
         }
 
-        $(document).on('dragenter', function (e)
+        jQuery(document).on('dragenter', function (e)
         {
             return false;
         });
-        $(document).on('dragover', function (e)
+        jQuery(document).on('dragover', function (e)
         {
             return false;
         });
-        $(document).on('drop', function (e)
+        jQuery(document).on('drop', function (e)
         {
 
             var files = e.originalEvent.dataTransfer.files;

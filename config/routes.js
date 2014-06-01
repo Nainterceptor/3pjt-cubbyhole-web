@@ -5,9 +5,12 @@ var user = require('../controllers/userController');
 module.exports = function (express) {
     var router = express.Router();
     router.use(require('../middlewares/flashbag')());
-    router.route('/user/*').all(require('../middlewares/users')());
+    router.route('/user/*').all(require('../middlewares/users'));
     router.get('/', index.index);
     router.get('/login', login.index);
+    router.get('/logout', user.logout);
+    router.get('/register', user.registerGet);
+    router.post('/register', user.registerPost);
     router.post('/login', login.login);
     router.get('/user/me', user.me);
     router.get('/user/webapp/index', require('../controllers/files/homeController'));
