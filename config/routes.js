@@ -18,8 +18,8 @@ module.exports = function (express) {
     router.get('/user/me', user.me);
     router.get('/user/webapp', files.index);
     router.get('/user/webapp/directory/new-directory', files.directory.getCreateDirectory);
-    router.get('/user/webapp/directory/remove/:directory', files.directory.getCreateDirectory);
-    router.post('/user/webapp/directory/new-directory', files.directory.removeDirectory);
+    router.post('/user/webapp/directory/new-directory', files.directory.postCreateDirectory);
+    router.get('/user/webapp/directory/remove/:directory', files.directory.removeDirectory);
     router.get('/user/webapp/directory/:directory', files.index);
     return router;
 };

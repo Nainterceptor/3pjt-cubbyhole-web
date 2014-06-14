@@ -27,7 +27,28 @@ exports.postCreateDirectory = function (req, res) {
         .end(function (rest) {
             var response = rest.body;
             if (response.success != true) {
-                res.flashBag.add("danger", "Something failed !");
+                if (response.message == 'validator.error') {
+                    for (key in response.errors) {
+                        if (response.errors.hasOwnProperty(key)) {
+                            switch (response.errors[key].message) {
+                                case 'validator.directory.name.alreadyExist':
+                                    res.flashBag.add("danger", "Name already exist in this directory !");
+                                    break;
+                                case 'validator.name.notValid':
+                                    res.flashBag.add("danger", "Name not valid !");
+                                    break;
+                                case 'validator.name.isEmpty':
+                                    res.flashBag.add("danger", "Name is empty !");
+                                    break;
+                                default:
+                                    res.flashBag.add("danger", "Something failed ! (" + response.errors[key].message + ")");
+                                    break;
+                            }
+                        }
+                    }
+                } else {
+                    res.flashBag.add("danger", "Something failed !");
+                }
                 res.render('files/createDirectory.html.twig',output);
             } else {
                 res.flashBag.add("success", "Directory successful created !");
