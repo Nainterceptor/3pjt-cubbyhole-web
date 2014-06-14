@@ -15,9 +15,13 @@
         </aside>
         <section class="col-md-10">
             <div class="row-fluid clearfix">
-                <div class="col-md-7"></div>
+                <div class="col-md-7">
+                    <ul class="list-inline">
+                        <li><a href="/user/webapp" class="glyphicon glyphicon-home"></a></li>
+                    </ul>
+                </div>
                 <div class="col-md-4 col-md-offset-1 my-account">
-                    {{ session.user.email }}
+                    {{ user.email }}
                 </div>
             </div>
             {% for type, flashs in getFlashs(res) %}
@@ -107,10 +111,22 @@
         {
             return false;
         });
+
+        var timeout;
         jQuery(document).on('dragover', function (e)
         {
+            console.log('dragover');
+            if ('undefined' !== typeof timeout) {
+                clearTimeout(timeout);
+                timeout = undefined;
+            }
+            jQuery("section.col-md-10").addClass("drop");
+            timeout = setTimeout(function() {
+                jQuery(".drop").removeClass("drop");
+            }, 200);
             return false;
         });
+
         jQuery(document).on('drop', function (e)
         {
 

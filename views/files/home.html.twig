@@ -1,5 +1,67 @@
 {% extends '../global/app.html.twig' %}
 
 {% block body %}
+    <h1>Folders</h1>
+    <div class="row">
+        {% for directory in directories %}
+            <div class="col-sm-4 col-md-2">
+                <div class="thumbnail">
+                    <a onclick="return confirm('Please confirm removing :')" href="/user/webapp/directory/remove/{{ directory._id }}" class="close pull-right" aria-hidden="true">&times;</a>
+                    <a onclick="return confirm('Please confirm removing :')" href="/user/webapp/directory/remove/{{ directory._id }}" class="close pull-right" aria-hidden="true">&times;</a>
+                    <a onclick="return confirm('Please confirm removing :')" href="/user/webapp/directory/remove/{{ directory._id }}" class="close pull-right" aria-hidden="true">&times;</a>
+                    <a onclick="return confirm('Please confirm removing :')" href="/user/webapp/directory/remove/{{ directory._id }}" class="close pull-right" aria-hidden="true">&times;</a>
+                    <div role="img" class="overview-icon">
+                        <a href="/user/webapp/directory/{{ directory._id }}">
+                            <span class="glyphicon glyphicon-folder-open"></span>
+                        </a>
+                    </div>
+                    <div class="caption">
+                        <h2>{{ directory.name }}</h2>
+                    </div>
+                </div>
+            </div>
+            {% set current = i+1 %}
+            {% if current%3 == 0 and current%6 == 0 %}
+                <div class="clearfix"></div>
+            {% elseif current%3 == 0 %}
+                <div class="clearfix visible-sm"></div>
+            {% elseif current%6 == 0 %}
+                <div class="clearfix visible-md"></div>
+            {% endif %}
+        {% endfor %}
+        <div class="col-sm-4 col-md-2">
+            <a href="/user/webapp/directory/new-directory{% if currentDirectory %}?parent={{ currentDirectory }}{% endif %}" class="overview-icon">
+                <span class="glyphicon glyphicon-plus-sign"></span>
+            </a>
+        </div>
+    </div>
     <h1>Files</h1>
+    <div class="row">
+        {% for i,file in files %}
+            <div class="col-sm-4 col-md-2">
+                <div class="thumbnail">
+
+                    <div role="img" class="overview-icon">
+                        <span class="glyphicon glyphicon-file"></span>
+                    </div>
+                    <div class="caption">
+                        <h2>{{ file.filename }}</h2>
+                        <!--<p>{{ file.uploadDate|date('Y-m-d h:i:s')}}</p>-->
+                        <p class="weight">{{ file.length|bytesToReadable }}</p>
+                        <a href="{{ config.api }}/file/download/{{ file._id }}?token={{ cookies.token }}" class="btn btn-default btn-lg">
+                            <span class="glyphicon glyphicon-download"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% set current = i+1 %}
+            {% if current%3 == 0 and current%6 == 0 %}
+                <div class="clearfix"></div>
+            {% elseif current%3 == 0 %}
+                <div class="clearfix visible-sm"></div>
+            {% elseif current%6 == 0 %}
+                <div class="clearfix visible-md"></div>
+            {% endif %}
+        {% endfor %}
+    </div>
 {% endblock body %}

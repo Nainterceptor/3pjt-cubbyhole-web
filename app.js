@@ -43,6 +43,9 @@ app.use(less({
 
     }
 ));
+swig.setFilter('bytesToReadable', function(bytes) {
+    return require('numeral')(bytes).format('0.0 b');
+});
 swig.setDefaults({
     locals: {
         tokenExist: function(req) { return req.cookies.token },
@@ -57,6 +60,7 @@ app.use('/js/jquery', express.static(path.join(__dirname, 'node_modules', 'jquer
 app.use('/js/bootstrap', express.static(path.join(__dirname, 'node_modules', 'twitter-bootstrap-3.0.0', 'js')));
 app.use('/fonts', express.static(path.join(__dirname, 'node_modules', 'twitter-bootstrap-3.0.0', 'fonts')));
 app.use(require('./middlewares/renderOverride'));
+app.use(require('./middlewares/flashbag')());
 app.use(require('./middlewares/getUserInformations'));
 app.use(require('./config/routes')(express, swig));
 

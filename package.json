@@ -18,6 +18,7 @@
     "serve-favicon": "^2.0.0",
     "swig": "~1.2.2",
     "twitter-bootstrap-3.0.0": "*",
-    "unirest": "~0.2.7"
+    "unirest": "~0.2.7",
+    "numeral": "~1.5.3"
   }
 }
