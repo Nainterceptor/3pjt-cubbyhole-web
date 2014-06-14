@@ -9,20 +9,32 @@ module.exports = function (req, res) {
         url += "/" + directory;
         output.currentDirectory = directory;
     }
+    var headers = {token: req.cookies.token};
     unirest
         .get(url)
         .type('json')
-        .headers({token: req.cookies.token})
+        .headers(headers)
         .end(function (rest) {
             var response = rest.body;
             if (response.success != true) {
                 res.flashBag.add("danger", "Something failed !");
-            } else {
+                res.render('files/home.html.twig',output);
+            } else if ('undefined' !== typeof directory) {
                 unirest
-                    .get(config)
+                    .get(config.api + '/directory/get-breadcrumb/' + directory)
+                    .type('json')
+                    .headers(headers)
+                    .end(function(rest) {
+                        output.rootline = require('../../helpers/breadcrumb.js').getNameList(rest.body);
+                        output.files = response.files;
+                        output.directories = response.directories;
+                        res.render('files/home.html.twig',output);
+                    });
+            } else {
+                output.rootline = [];
                 output.files = response.files;
                 output.directories = response.directories;
+                res.render('files/home.html.twig',output);
             }
-            res.render('files/home.html.twig',output);
         });
 };

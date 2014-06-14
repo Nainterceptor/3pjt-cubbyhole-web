@@ -1,15 +1,29 @@
 {% extends '../global/app.html.twig' %}
 
+{% block breadcrumbs %}
+    {% parent %}
+    {% for breadcrumb in rootline%}
+        {% if (rootline|last).id == breadcrumb.id %}
+            <li class="active">
+                {{ breadcrumb.name }}
+            </li>
+        {% else %}
+            <li>
+                <a href="/user/webapp/directory/{{ breadcrumb.id }}">
+                    {{ breadcrumb.name }}
+                </a>
+            </li>
+        {% endif %}
+    {% endfor %}
+{% endblock breadcrumbs %}
+
 {% block body %}
     <h1>Folders</h1>
     <div class="row">
         {% for directory in directories %}
             <div class="col-sm-4 col-md-2">
                 <div class="thumbnail">
-                    <a onclick="return confirm('Please confirm removing :')" href="/user/webapp/directory/remove/{{ directory._id }}" class="close pull-right" aria-hidden="true">&times;</a>
-                    <a onclick="return confirm('Please confirm removing :')" href="/user/webapp/directory/remove/{{ directory._id }}" class="close pull-right" aria-hidden="true">&times;</a>
-                    <a onclick="return confirm('Please confirm removing :')" href="/user/webapp/directory/remove/{{ directory._id }}" class="close pull-right" aria-hidden="true">&times;</a>
-                    <a onclick="return confirm('Please confirm removing :')" href="/user/webapp/directory/remove/{{ directory._id }}" class="close pull-right" aria-hidden="true">&times;</a>
+                    <a onclick="return confirm('Please confirm removing')" href="/user/webapp/directory/remove/{{ directory._id }}" class="close pull-right" aria-hidden="true">&times;</a>
                     <div role="img" class="overview-icon">
                         <a href="/user/webapp/directory/{{ directory._id }}">
                             <span class="glyphicon glyphicon-folder-open"></span>

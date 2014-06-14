@@ -15,12 +15,12 @@
         </aside>
         <section class="col-md-10">
             <div class="row-fluid clearfix">
-                <div class="col-md-7">
-                    <ul class="list-inline">
-                        <li><a href="/user/webapp" class="glyphicon glyphicon-home"></a></li>
-                    </ul>
+                <div class="col-md-9">
+                    <ol class="breadcrumb">
+                        {% block breadcrumbs %}<li><a href="/user/webapp" class="glyphicon glyphicon-home"></a></li>{% endblock breadcrumbs %}
+                    </ol>
                 </div>
-                <div class="col-md-4 col-md-offset-1 my-account">
+                <div class="col-md-3 my-account">
                     {{ user.email }}
                 </div>
             </div>
