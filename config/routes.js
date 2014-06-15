@@ -34,6 +34,7 @@ module.exports = function (express) {
     router.post('/user/webapp/directory/edit/:directory', files.directory.postEditDirectory);
 
     router.get('/user/webapp/file/remove/:file', files.file.removeFile);
+    router.get('/user/webapp/:directory/file/remove/:file', files.file.removeFile);
 
     router.get('/user/addplan/:id', require('../controllers/planController').add);
 
@@ -44,6 +45,7 @@ module.exports = function (express) {
     router.get('/admin/plan/remove/:id', plans.plan.removePlan);
     router.post('/admin/plan/new-plan', plans.plan.postCreatePlan);
     router.post('/admin/plan/edit-plan/:id', plans.plan.postEditPlan);
+
 
     return router;
 };
