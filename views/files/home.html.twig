@@ -60,7 +60,6 @@
                     </div>
                     <div class="caption">
                         <h2>{{ file.filename }}</h2>
-                        <!--<p>{{ file.uploadDate|date('Y-m-d h:i:s')}}</p>-->
                         <p class="weight">{{ file.length|bytesToReadable }}</p>
                         <a href="{{ config.api }}/file/download/{{ file._id }}?token={{ cookies.token }}" class="btn btn-default btn-lg">
                             <span class="glyphicon glyphicon-download"></span>

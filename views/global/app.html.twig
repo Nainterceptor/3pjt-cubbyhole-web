@@ -60,6 +60,7 @@
     <script type="text/javascript" src="/js/jquery.cookie.js"></script>
     <script type="text/javascript" src="/js/bootstrap/alert.js"></script>
     <script type="text/javascript">
+        var pathname = window.location.pathname;
         function progressHandlingFunction(e){
             if(e.lengthComputable){
                 console.log(e.loaded);
@@ -69,6 +70,12 @@
         }
         function sendFileToServer(formData)
         {
+            var mongoid = pathname.match(/[0-9a-fA-F]{24}/mg);
+            if (typeof mongoid === 'object') {
+                var mongoIdStr = mongoid.pop();
+                formData.append('directory', mongoIdStr);
+                console.log(mongoIdStr);
+            }
             var token = jQuery.cookie("token");
             jQuery.ajax({
                 url: "{{ config.api }}/file/upload",
