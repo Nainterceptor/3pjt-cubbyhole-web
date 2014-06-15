@@ -1,6 +1,27 @@
 {% extends '../global/front.html.twig' %}
+
 {% block body %}
     <h1>Personnal informations</h1>
-    <span>Email : </span><span>{{ user.email }}</span>
-    <span>Admin : </span><span>{{ user.admin }}</span>
+    <hr>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Email</label>
+                {{ user.email }}
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Role</label>
+                {% if isAdmin(req) %}
+                    Admin
+                {% else %}
+                    User
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Plan</label>
+                {{ user.plan.name }}
+            </div>
+        </div>
+    </div>
+
 {% endblock body %}

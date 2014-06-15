@@ -1,0 +1,69 @@
+{% extends '../global/front.html.twig' %}
+
+{% block body %}
+    <h1>Edit a plan</h1>
+    <hr>
+    <div class="row">
+        <div class="col-md-6">
+            <form role="form" method="post">
+                <div class="form-group">
+                    <!-- Name -->
+                    <label for="name" class="col-sm-2 control-label">Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="name" value="{{ name }}" class="form-control" id="name" placeholder="{{ name }}">
+                    </div>
+                </div>
+                <!-- Description -->
+                <div class="form-group">
+                    <label for="description" class="col-sm-2 control-label">Description</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="description" value="{{ description }}" class="form-control" id="description" placeholder="Description">
+                    </div>
+                </div>
+                <!-- Price -->
+                <div class="form-group">
+                    <label for="price" class="col-sm-2 control-label">Price</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="price" value="{{ price }}" class="form-control" id="price" placeholder="Price">
+                    </div>
+                </div>
+                <!-- Duration -->
+                <div class="form-group">
+                    <label for="duration" class="col-sm-2 control-label">Duration</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="duration" value="{{ duration }}" class="form-control" id="duration" placeholder="Duration">
+                    </div>
+                </div>
+                <!-- Storage -->
+                <div class="form-group">
+                    <label for="storage" class="col-sm-2 control-label">Storage</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="storage" value="{{ storage }}" class="form-control" id="storage" placeholder="Storage">
+                    </div>
+                </div>
+                <!-- Bandwidth -->
+                <div class="form-group">
+                    <label for="bandwidth" class="col-sm-2 control-label">Bandwidth</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="bandwidth" value="{{ bandwidth }}" class="form-control" id="bandwidth" placeholder="Bandwidth">
+                    </div>
+                </div>
+                <!-- Quota -->
+                <div class="form-group">
+                    <label for="quota" class="col-sm-2 control-label">Quota</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="quota" value="{{ quota }}" class="form-control" id="quota" placeholder="Quota">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default">Edit</button>
+                        <a href="/admin">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock body %}

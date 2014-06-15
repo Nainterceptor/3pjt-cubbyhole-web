@@ -67,3 +67,42 @@ exports.removeDirectory = function (req, res) {
             res.redirect('/user/webapp');
         });
 };
+
+exports.getEditDirectory = function (req, res) {
+    var dir = {
+        '_id': req.params.directory
+    };
+    var headers = {token: req.cookies.token};
+    unirest
+        .get(config.api + '/directory/get-breadcrumb/' + dir._id)
+        .headers(headers)
+        .end(function(rest) {
+            var response = rest.body;
+            res.render('files/editDirectory.html.twig',response.directory);
+        });
+};
+
+exports.postEditDirectory = function (req, res) {
+    var dir = {
+        '_id': req.params.directory
+    };
+    var output = req.body;
+    var url = config.api + '/directory/update/' + dir._id;
+
+    unirest
+        .post(url)
+        .type('json')
+        .query(dir)
+        .send(output)
+        .headers({token: req.cookies.token})
+        .end(function (rest) {
+            var response = rest.body;
+            if (response.success != true) {
+                res.flashBag.add("danger", "Something failed !");
+                res.render('files/editDirectory.html.twig', output);
+            } else {
+                res.flashBag.add("success", "Directory successful updated !");
+                res.redirect('/user/webapp');
+            }
+        });
+};

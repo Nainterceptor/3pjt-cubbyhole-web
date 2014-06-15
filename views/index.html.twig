@@ -1,7 +1,7 @@
 {% extends 'global/front.html.twig' %}
-{% block title -%}
+{% block title %}
     Home - {% parent %}
-{%- endblock title %}
+{% endblock title %}
 {% block body %}
     <h1>Offers</h1>
     <hr>
@@ -15,7 +15,7 @@
                     {% else %}
                         <p>{{ plan.price }}€ / month !</p>
                     {% endif %}
-                    <p><a class="btn btn-primary">Subscribe &raquo;</a></p>
+                    <p><a class="btn btn-primary" href="/user/addplan/{{ plan._id }}">Subscribe &raquo;</a></p>
                 </div>
             </div>
         </div>

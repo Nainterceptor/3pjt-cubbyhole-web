@@ -49,6 +49,7 @@ swig.setFilter('bytesToReadable', function(bytes) {
 swig.setDefaults({
     locals: {
         tokenExist: function(req) { return req.cookies.token },
+        isAdmin: function(req) { return req.user.admin},
         getFlashs: function(res) {
             return res.flashBag.flush();
         },

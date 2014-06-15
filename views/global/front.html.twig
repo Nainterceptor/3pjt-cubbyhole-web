@@ -20,20 +20,31 @@
                 <ul class="nav navbar-nav">
                     <li><a href="/">Home</a></li>
                 </ul>
+                {% if tokenExist(req) %}
+                    <ul class="nav navbar-nav">
+                        <li><a href="/user/webapp">WebApp</a></li>
+                    </ul>
+                {% endif %}
+
+
                 <ul class="nav navbar-nav navbar-right">
                     {% if tokenExist(req) %}
                         <li class="dropdown">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="/user/me">{{ user.email }} <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="/user/me">About Me</a></li>
+                                <li><a href="/user/me">About me</a></li>
                                 <li class="divider"></li>
                                 <li><a href="/logout">Logout</a></li>
                             </ul>
                         </li>
+                    {% if isAdmin(req) %}
+                            <li><a href="/admin">Admin</a></li>
+                    {% endif %}
                     {% else %}
                         <li><a href="/login">Login</a></li>
                         <li><a href="/register">Register</a></li>
                     {% endif %}
+
                 </ul>
             </div>
         </div>

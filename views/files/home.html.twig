@@ -23,6 +23,9 @@
         {% for directory in directories %}
             <div class="col-sm-4 col-md-2">
                 <div class="thumbnail">
+                    <a href="/user/webapp/directory/edit/{{ directory._id }}">
+                        <div class="glyphicon glyphicon-pencil"></div>
+                    </a>
                     <a onclick="return confirm('Please confirm removing')" href="/user/webapp/directory/remove/{{ directory._id }}" class="close pull-right" aria-hidden="true">&times;</a>
                     <div role="img" class="overview-icon">
                         <a href="/user/webapp/directory/{{ directory._id }}">
@@ -54,7 +57,8 @@
         {% for i,file in files %}
             <div class="col-sm-4 col-md-2">
                 <div class="thumbnail">
-
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    <a onclick="return confirm('Please confirm removing')" href="/user/webapp/directory/remove/{{ directory._id }}" class="close pull-right" aria-hidden="true">&times;</a>
                     <div role="img" class="overview-icon">
                         <span class="glyphicon glyphicon-file"></span>
                     </div>
