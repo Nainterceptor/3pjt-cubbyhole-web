@@ -58,5 +58,12 @@ exports.postCreateDirectory = function (req, res) {
 };
 
 exports.removeDirectory = function (req, res) {
-
+    var url = config.api + '/directory/remove/' + req.params.directory;
+    unirest
+        .delete(url)
+        .headers({token: req.cookies.token})
+        .end(function (rest) {
+            res.flashBag.add("success", "Directory successful removed !");
+            res.redirect('/user/webapp');
+        });
 };
