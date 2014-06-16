@@ -56,6 +56,11 @@
                 console.log(i);
                table.append(table.attr('data-prototype').replace(/__i__/g, i));
             });
+            jQuery('.remove-from-prototype').bind('click', function(){
+                var table = jQuery(this).siblings('.table-to-add');
+                var $this = $(this);
+                $this.closest('tr').remove();
+            });
         });
     </script>
 {% endblock pageJavascript %}
