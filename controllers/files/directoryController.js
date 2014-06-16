@@ -96,13 +96,21 @@ exports.postEditDirectory = function (req, res) {
         .send(output)
         .headers({token: req.cookies.token})
         .end(function (rest) {
-            var response = rest.body;
-            if (response.success != true) {
-                res.flashBag.add("danger", "Something failed !");
-                res.render('files/editDirectory.html.twig', output);
-            } else {
-                res.flashBag.add("success", "Directory successful updated !");
-                res.redirect('/user/webapp');
-            }
+            unirest
+                .post(url + '/edit-rights')
+                .type('json')
+                .send(output)
+                .headers({token: req.cookies.token})
+                .end(function (rest2) {
+                    var response = rest.body;
+                    if (response.success != true) {
+                        res.flashBag.add("danger", "Something failed !");
+                        res.render('files/editDirectory.html.twig', output);
+                    } else {
+                        res.flashBag.add("success", "Directory successful updated !");
+                        res.redirect('/user/webapp');
+                    }
+                });
+
         });
 };

@@ -16,3 +16,10 @@ exports.removeFile = function (req, res) {
             res.redirect(urlToRedirect);
         });
 };
+
+exports.getEditFile = function(req, res) {
+};
+
+exports.postEditFile = function(req, res) {
+
+};

@@ -58,7 +58,9 @@
             <div class="col-sm-4 col-md-2">
                 <div class="thumbnail">
                     <a onclick="return confirm('Please confirm removing')" href="/user/webapp/{% if currentDirectory %}{{ currentDirectory }}/{% endif %}file/remove/{{ file._id }}" class="close pull-right" aria-hidden="true">&times;</a>
-                    <span class="glyphicon glyphicon-pencil"></span>
+                    <!--<a href="/user/webapp/{% if currentDirectory %}{{ currentDirectory }}/{% endif %}file/edit/{{ file._id }}">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>-->
                     <div role="img" class="overview-icon">
                         <span class="glyphicon glyphicon-file"></span>
                     </div>

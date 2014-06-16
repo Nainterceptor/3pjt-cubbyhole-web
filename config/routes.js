@@ -33,6 +33,10 @@ module.exports = function (express) {
     router.get('/user/webapp/directory/edit/:directory', files.directory.getEditDirectory);
     router.post('/user/webapp/directory/edit/:directory', files.directory.postEditDirectory);
 
+    router.get('/user/webapp/file/edit/:file', files.file.getEditFile);
+    router.get('/user/webapp/:directory/file/edit/:file', files.file.getEditFile);
+    router.post('/user/webapp/file/edit/:file', files.file.postEditFile);
+    router.post('/user/webapp/:directory/file/edit/:file', files.file.postEditFile);
     router.get('/user/webapp/file/remove/:file', files.file.removeFile);
     router.get('/user/webapp/:directory/file/remove/:file', files.file.removeFile);
 
