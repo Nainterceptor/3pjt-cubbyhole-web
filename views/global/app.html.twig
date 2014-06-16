@@ -10,7 +10,9 @@
         <aside class="col-md-2" role="navigation">
             <a href="/"><h1>Cubbyhole</h1></a>
             <ul>
-                <li><span class="glyphicon glyphicon-file" ></span> <a href="/user/webapp/index">Files</a></li>
+                <li><span class="glyphicon glyphicon-file" ></span> <a href="/user/webapp">Files</a></li>
+                <li><span class="glyphicon glyphicon-plus"></span> <a href="/user/webapp/directory/new-directory{% if currentDirectory %}?parent={{ currentDirectory }}{% endif %}">New directory</a></li>
+                <li><span class="glyphicon glyphicon-circle-arrow-left"></span> <a href="/">Back to site</a></li>
             </ul>
         </aside>
         <section class="col-md-10">
@@ -61,17 +63,38 @@
     <script type="text/javascript" src="/js/bootstrap/alert.js"></script>
     <script type="text/javascript">
         var pathname = window.location.pathname;
-        function progressHandlingFunction(e){
-            if(e.lengthComputable){
-                console.log(e.loaded);
-                console.log(e.total);
-                jQuery('progress').attr({value:e.loaded,max:e.total});
+        function progress (sign) {
+
+            return function (e){
+                if(e.lengthComputable){
+                    var percent = Math.floor((e.loaded / e.total) * 100);
+                    var obj = jQuery('[data-content="' + sign + '"]');
+                    obj.attr('aria-valuenow', percent);
+                    obj.css('width', percent + '%');
+                    obj.text(percent + '%');
+                }
             }
         }
-        function sendFileToServer(formData)
+        function sendFileToServer(formData, file)
         {
+            var newFile = jQuery(
+                '<div class="col-sm-4 col-md-2">'
+                 + '<div class="thumbnail">'
+                        + '<div class="overview-icon" role="img">'
+                            + '<span class="glyphicon glyphicon-file"></span>'
+                        + '</div>'
+                        + '<div class="caption">'
+                            + '<h2>' + file.name + '</h2>'
+                        + '</div>'
+                        + '<div class="progress">'
+                            + '<div data-content="' + file.name + '" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" >0%</div>'
+                        + '</div>'
+                    + '</div>'
+                 + '</div>'
+            );
+            jQuery('#files').append(newFile);
             var mongoid = pathname.match(/[0-9a-fA-F]{24}/mg);
-            if (typeof mongoid === 'object') {
+            if (typeof mongoid === 'object' && mongoid != null) {
                 var mongoIdStr = mongoid.pop();
                 formData.append('directory', mongoIdStr);
                 console.log(mongoIdStr);
@@ -86,7 +109,7 @@
                 xhr: function() {
                     var myXhr = jQuery.ajaxSettings.xhr();
                     if(myXhr.upload){
-                        myXhr.upload.addEventListener('progress',progressHandlingFunction, false);
+                        myXhr.upload.addEventListener('progress',progress(file.name), false);
                     }
                     return myXhr;
                 },
@@ -110,7 +133,7 @@
             {
                 var fd = new FormData();
                 fd.append('file', files[i]);
-                sendFileToServer(fd);
+                sendFileToServer(fd, files[i]);
             }
         }
 
