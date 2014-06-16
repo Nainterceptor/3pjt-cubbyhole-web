@@ -71,7 +71,7 @@
         function sendFileToServer(formData)
         {
             var mongoid = pathname.match(/[0-9a-fA-F]{24}/mg);
-            if (typeof mongoid === 'object') {
+            if (typeof mongoid === 'object' && mongoid != null) {
                 var mongoIdStr = mongoid.pop();
                 formData.append('directory', mongoIdStr);
                 console.log(mongoIdStr);
