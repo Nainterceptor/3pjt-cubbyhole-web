@@ -16,12 +16,12 @@
                 <div class="form-group">
                     <label for="rights" class="col-sm-2 control-label">Rights</label>
                     <div class="col-sm-10">
-                        <table id="rights-table" class="table-to-add" data-prototype="{{ '<tr data-index="__i__"><td style="border-style: solid; border-width: 1px"><input type="text" name="users[__i__][email]" class="form-control" id="email" style="border: none"> </td><td style="border-style: solid; border-width: 1px"> <input type="text" name="users[__i__][rights]" class="form-control" id="right" style="border: none"> </td><td style="border:none"> <button class="btn pull-left remove-from-prototype" data-target=".table-to-add" type="button" style="border: none;"><span class="glyphicon glyphicon-minus"></span></button></td></tr>'|e }}">
+                        <table id="rights-table" class="table-to-add" data-prototype="{{ '<tr data-index="__i__"><td style="border-style: solid; border-width: 1px"><input type="text" name="users[__i__][email]" class="form-control" id="email" style="border: none"> </td><td style="border-style: solid; border-width: 1px"> <input type="text" name="users[__i__][rights]" class="form-control" id="right" style="border: none"> </td><td style="border:none"><button class="btn pull-left remove" type="button"><span class="glyphicon glyphicon-minus"></span></button></td></tr>'|e }}">
                         {% for i,user in users %}
                             <tr data-index="{{ i }}">
                                 <td style="border-style: solid; border-width: 1px"> <input type="text" name="users[{{ i }}][email]" value="{{ user.email }}" class="form-control" id="email" style="border: none"> </td>
                                 <td style="border-style: solid; border-width: 1px"> <input type="text" name="users[{{ i }}][rights]" value="{{ user.rights }}" class="form-control" id="right" style="border: none"> </td>
-                                <td style="border:none"> <button class="btn pull-left remove-from-prototype" data-target=".table-to-add" type="button" style="border: none;"><span class="glyphicon glyphicon-minus"></span></button></td>
+                                <td style="border:none"> <button class="btn pull-left remove" type="button"><span class="glyphicon glyphicon-minus"></span></button></td>
                             </tr>
                         {% endfor %}
                         </table>
@@ -45,6 +45,11 @@
 {% block pageJavascript %}
     {% parent %}
     <script type="text/javascript">
+        function setRemove(context) {
+            jQuery('.btn.remove', context).bind('click', function () {
+                jQuery(this).parent().parent().remove();
+            });
+        }
         jQuery(document).ready(function(){
             jQuery('.add-from-prototype').bind('click', function(){
                 var table = jQuery(this).siblings('.table-to-add');
@@ -53,8 +58,13 @@
                     i = parseInt(jQuery(this).attr('data-index'));
                 });
                 i++;
-                console.log(i);
-               table.append(table.attr('data-prototype').replace(/__i__/g, i));
+                var row = jQuery(table.attr('data-prototype').replace(/__i__/g, i));
+                console.log(row);
+                setRemove(row);
+                table.append(row);
+            });
+            jQuery('.table-to-add tr').each(function(){
+                setRemove(this);
             });
         });
     </script>
