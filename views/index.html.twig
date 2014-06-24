@@ -15,6 +15,32 @@
                     {% else %}
                         <p>{{ plan.price }}€ / month !</p>
                     {% endif %}
+                    <p>
+                    <table class="table table-striped table-bordered">
+                        <tbody>
+                        <tr>
+                            <td>Storage capacity</td>
+                            <td>{{ plan.storage | bytesToReadable }}</td>
+                        </tr>
+                        <tr>
+                            <td>Bandwidth</td>
+                            {% if plan.bandwidth == 0 %}
+                                <td>Unlimited</td>
+                            {% else %}
+                                <td>{{ plan.bandwidth | bytesToReadable }}/sec</td>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <td>Shared link capacity</td>
+                            {% if plan.quota == 0 %}
+                                <td>Unlimited</td>
+                            {% else %}
+                                <td>{{ plan.quota | bytesToReadable }} per day</td>
+                            {% endif %}
+                        </tr>
+                        </tbody>
+                    </table>
+                    </p>
                     <p><a class="btn btn-primary" href="/user/addplan/{{ plan._id }}">Subscribe &raquo;</a></p>
                 </div>
             </div>
