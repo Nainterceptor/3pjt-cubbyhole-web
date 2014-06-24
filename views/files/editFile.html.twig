@@ -3,29 +3,26 @@
 {% block body %}
     <h1> {{ filename }} </h1>
     <hr>
+    {% if metadata.public %}
+    <h2>Public link</h2>
+    <a href="http://localhost:3000/file/download/{{ _id }}">http://localhost:3000/file/download/{{ _id }}</a>
+    {% endif %}
     <div class="row">
         <div class="col-md-6">
             <form role="form" method="post">
                 <div class="form-group">
-                    <label for="name" class="col-sm-2 control-label">Name</label>
-                    <div class="col-sm-10">
-                        <input type="text" name="name" value="{{ filename }}" class="form-control" id="name">
-                    </div>
-                </div>
-                <hr>
-                <div class="form-group">
                     <label for="rights" class="col-sm-2 control-label">Rights</label>
                     <div class="col-sm-10">
                         <button class="btn pull-left add-from-prototype" data-target=".table-to-add" type="button"><span class="glyphicon glyphicon-plus"></span></button>
-                        <table id="rights-table" class="table-to-add" border="1" data-prototype="{{ '<tr data-index="__i__"><td><input type="text" name="user[__i__][email]" class="form-control" id="email" style="border: none"> </td><td> <input type="text" name="user[__i__][rights]" class="form-control" id="right" style="border: none"> </td></tr>'|e }}">
-                            {% for i,user in users %}
+                        <table id="rights-table" class="table-to-add" border="1" data-prototype="{{ '<tr data-index="__i__"><td><input type="text" class="form-control" id="email" style="border: none"> </td><td> <input type="text" class="form-control" id="right" style="border: none"> </td></tr>'|e }}">
+                            {% for i,user in metadata.users %}
                                 <tr data-index="{{ i }}">
-                                    <td> <input type="text" name="user[{{ i }}][email]" value="{{ user.email }}" class="form-control" id="email" style="border: none"> </td>
-                                    <td> <input type="text" name="user[{{ i }}][rights]" value="{{ user.rights }}" class="form-control" id="right" style="border: none"> </td>
+                                    <td> <input type="text" value="{{ user.email }}" class="form-control" id="email" style="border: none"> </td>
+                                    <td> <input type="text" value="{{ user.rights }}" class="form-control" id="right" style="border: none"> </td>
                                 </tr>
                             {% endfor %}
                         </table>
-                        <input type="checkbox" name="cascade" value="Cascade"> Recursive </input>
+                        <input {% if metadata.public %}checked="checked" {% endif %} type="checkbox" name="public" value="true"> Public </input>
                     </div>
                 </div>
 
